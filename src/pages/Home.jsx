@@ -2,8 +2,13 @@
 
 import React from "react";
 import { FaVideo, FaChartLine, FaTrophy } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import VideoUpload from "./VideoUpload";
+import Dashboard from "./Dashboard";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f5f5f5] text-[#333] font-sans">
       {/* Hero Section */}
@@ -23,7 +28,10 @@ function Home() {
           <p className="text-base mb-4">
             Show your skills and let AI evaluate your performance.
           </p>
-          <button className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]">
+          <button
+            onClick={() => navigate("/videoupload")}
+            className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]"
+          >
             Start Upload
           </button>
         </div>
@@ -34,7 +42,10 @@ function Home() {
           <p className="text-base mb-4">
             Track growth, receive insights, and avoid injuries.
           </p>
-          <button className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]"
+          >
             View Progress
           </button>
         </div>
@@ -66,7 +77,9 @@ function Home() {
             </p>
           </div>
           <div className="bg-white p-6 rounded-xl border border-[#e0e0e0] shadow-md transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg">
-            <h3 className="text-lg mb-2 text-[#ff9800]">📊 Progress Tracking</h3>
+            <h3 className="text-lg mb-2 text-[#ff9800]">
+              📊 Progress Tracking
+            </h3>
             <p className="text-base text-[#555] leading-relaxed">
               Track growth, monitor performance, and prevent injuries.
             </p>
@@ -85,11 +98,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="text-center py-6 bg-[#333] text-white mt-auto">
-        <p>⚡ Powered by AI | Microsoft Hackathon 2025</p>
-      </footer>
     </div>
   );
 }

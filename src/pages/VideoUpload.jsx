@@ -5,6 +5,7 @@ import React, { useState } from "react";
 function VideoUpload() {
   const [video, setVideo] = useState(null);
   const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleVideoUpload = (e) => {
     const file = e.target.files[0];
@@ -16,12 +17,33 @@ function VideoUpload() {
     }
   };
 
-  const handleSubmit = () => {
-    setResults({
-      correctReps: 12,
-      wrongForm: 3,
-      suggestion: "Keep back straight.",
-    });
+  const handleSubmit = async () => {
+    if (!video) return;
+
+    setLoading(true);
+    setResults(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("video", video);
+
+      const response = await fetch("http://localhost:5000/analyze", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to analyze video");
+      }
+
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error analyzing video. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,7 +56,7 @@ function VideoUpload() {
       <div className="mb-5 p-8 border-2 border-dashed border-[#aaa] rounded-xl bg-[#f9fafc] transition duration-300 hover:border-[#3498db]">
         <label
           htmlFor="video-input"
-          className="inline-block px-5 py-3 bg-[#3498db] text-white font-bold rounded-lg cursor-pointer transition duration-300 hover:bg-[#2980b9]"
+          className="inline-block px-5 py-3 bg-[#ff9800] text-white font-bold rounded-lg cursor-pointer transition duration-300 hover:bg-[#e68900]"
         >
           Choose a video file
         </label>
@@ -56,7 +78,7 @@ function VideoUpload() {
       {/* Submit Button */}
       {video && (
         <button
-          className="mt-5 px-6 py-3 text-base bg-[#2ecc71] text-white font-bold rounded-xl cursor-pointer transition duration-300 hover:bg-[#27ae60]"
+          className="mt-5 px-6 py-3 text-base bg-[#ff9800] text-white font-bold rounded-xl cursor-pointer transition duration-300 hover:bg-[#e68900]"
           onClick={handleSubmit}
         >
           Submit for Analysis

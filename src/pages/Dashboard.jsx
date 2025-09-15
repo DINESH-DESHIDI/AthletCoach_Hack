@@ -1,7 +1,33 @@
 /* Dashboard.jsx */
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function Dashboard() {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Replace with your backend endpoint
+    fetch("http://localhost:5000/dashboard", {
+      method: "GET",
+      credentials: "include", // if you’re using cookies/sessions
+      headers: {
+        "Content-Type": "application/json",
+        // Or include token if you’re using JWT
+        // Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch dashboard data");
+        return res.json();
+      })
+      .then((data) => {
+        setDashboardData(data);
+      })
+      .catch((err) => {
+        console.error("Error loading dashboard:", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <div className="max-w-[900px] mx-auto p-8 font-['Segoe_UI',Tahoma,Geneva,Verdana,sans-serif] text-gray-800">
       <h1 className="text-center mb-6 text-2xl font-bold text-[#2c3e50]">
@@ -42,7 +68,14 @@ function Dashboard() {
           🥉 Bronze Push-up Champion
         </div>
       </div>
+
+      {/* Footer */}
+      {/* <footer className="text-center py-6 bg-[#333] text-white ">
+      <p>⚡ Powered by AI | Microsoft Hackathon 2025</p>
+    </footer> */}
     </div>
+
+
   );
 }
 

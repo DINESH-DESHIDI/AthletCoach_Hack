@@ -1,19 +1,18 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/NavBar";
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import Dashboard from "./pages/Dashboard";
-import VideoUpload from "./pages/VideoUpload";
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 import "./App.css";
 import AppRoutes from "./routes/AppRoutes.jsx";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter className="flex flex-col min-h-screen">
       <Navbar />
-      <AppRoutes/>
+      <main className="flex-grow">
+        <AppRoutes />
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 }
