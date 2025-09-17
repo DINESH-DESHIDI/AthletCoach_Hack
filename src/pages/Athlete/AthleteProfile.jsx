@@ -29,7 +29,7 @@ function Profile() {
       {/* Top Section */}
       <div className="flex items-center gap-6 border-b pb-6 mb-6">
         <div className="w-24 h-24 rounded-full bg-indigo-600 text-white flex items-center justify-center text-3xl font-bold shadow-md">
-          {user.name[0].toUpperCase()}
+          {user?.name ? user.name[0].toUpperCase() : "?"}
         </div>
         <div>
           <h2 className="text-3xl font-bold text-gray-800">{user.name}</h2>

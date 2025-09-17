@@ -29,7 +29,7 @@ function Home() {
             Show your skills and let AI evaluate your performance.
           </p>
           <button
-            onClick={() => navigate("/videoupload")}
+            onClick={() => navigate("/athlete/videoupload")}
             className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]"
           >
             Start Upload
@@ -43,7 +43,7 @@ function Home() {
             Track growth, receive insights, and avoid injuries.
           </p>
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/athlete/dashboard")}
             className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]"
           >
             View Progress
@@ -56,7 +56,10 @@ function Home() {
           <p className="text-base mb-4">
             Compete, compare, and get noticed by coaches.
           </p>
-          <button className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]">
+          <button
+            onClick={() => navigate("/athlete/rankings")}
+            className="bg-[#ff9800] text-white border-none px-5 py-2 rounded-md font-bold cursor-pointer hover:bg-[#e68900]"
+          >
             Check Rankings
           </button>
         </div>

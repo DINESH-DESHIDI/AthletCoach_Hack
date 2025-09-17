@@ -1,5 +1,7 @@
 /* Dashboard.jsx */
 import React, { useEffect, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -35,11 +37,23 @@ function Dashboard() {
       </h1>
 
       {/* Graph Placeholder */}
-      <div className="mb-8 p-5 bg-[#f9fafc] rounded-xl shadow-md">
-        <h2 className="text-lg font-semibold mb-4">Performance Over Time</h2>
-        <div className="h-[200px] border-2 border-dashed border-[#bbb] rounded-lg flex justify-center items-center text-gray-500 italic">
-          [Graph will be displayed here]
-        </div>
+      <div className="h-[200px] border-2 border-dashed border-[#bbb] rounded-lg flex justify-center items-center text-gray-500 italic">
+        {dashboardData?.graphData ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={dashboardData.graphData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="stamina" stroke="#27ae60" />
+              <Line type="monotone" dataKey="strength" stroke="#2980b9" />
+              <Line type="monotone" dataKey="speed" stroke="#e67e22" />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          "[Graph will be displayed here]"
+        )}
       </div>
 
       {/* Metrics */}
@@ -74,8 +88,6 @@ function Dashboard() {
       <p>⚡ Powered by AI | Microsoft Hackathon 2025</p>
     </footer> */}
     </div>
-
-
   );
 }
 

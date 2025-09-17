@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Signup from "./Signup";
 
 function Login() {
   const [formData, setFormData] = useState({
+    role: "athlete", // default role
     name: "",
     sport: "",
     password: "",
@@ -25,10 +25,14 @@ function Login() {
     if (
       savedUser &&
       savedUser.name === formData.name &&
-      savedUser.sport === formData.sport &&
-      savedUser.password === formData.password
+      savedUser.password === formData.password &&
+      (savedUser.role === "athlete" || savedUser.role === "coach")
     ) {
-      navigate("/profile", { state: { user: savedUser } });
+      if (savedUser.role === "athlete") {
+        navigate("/athlete/profile", { state: { user: savedUser } });
+      } else if (savedUser.role === "coach") {
+        navigate("/coach/profile", { state: { user: savedUser } });
+      }
     } else {
       setError("Incorrect details, please try again.");
     }
@@ -46,11 +50,26 @@ function Login() {
         </p>
 
         {error && (
-          <p className="text-[#e74c3c] text-center mt-4 text-[0.9rem] font-medium">
+          <p className="text-[#e74c3c] text-center mt-2 text-[0.9rem] font-medium">
             {error}
           </p>
         )}
 
+        {/* Role Selection */}
+        <label className="flex flex-col items-start font-medium text-[#333]">
+          Role
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none"
+          >
+            <option value="athlete">Athlete</option>
+            <option value="coach">Coach</option>
+          </select>
+        </label>
+
+        {/* Name */}
         <label className="flex flex-col items-start font-medium text-[#333] mt-4">
           Name
           <input
@@ -60,23 +79,27 @@ function Login() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none focus:shadow-[0_0_4px_rgba(255,152,0,0.5)]"
+            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none"
           />
         </label>
 
-        <label className="flex flex-col items-start font-medium text-[#333] mt-4">
-          Sport Interest
-          <input
-            type="text"
-            name="sport"
-            placeholder="Enter your sport"
-            value={formData.sport}
-            onChange={handleChange}
-            required
-            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none focus:shadow-[0_0_4px_rgba(255,152,0,0.5)]"
-          />
-        </label>
+        {/* Sport (Only for Athlete) */}
+        {formData.role === "athlete" && (
+          <label className="flex flex-col items-start font-medium text-[#333] mt-4">
+            Sport Interest
+            <input
+              type="text"
+              name="sport"
+              placeholder="Enter your sport"
+              value={formData.sport}
+              onChange={handleChange}
+              required={formData.role === "athlete"}
+              className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none"
+            />
+          </label>
+        )}
 
+        {/* Password */}
         <label className="flex flex-col items-start font-medium text-[#333] mt-4">
           Password
           <input
@@ -86,7 +109,7 @@ function Login() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none focus:shadow-[0_0_4px_rgba(255,152,0,0.5)]"
+            className="mt-2 w-full p-3 border border-[#ccc] rounded-lg text-base transition duration-200 focus:border-[#ff9800] focus:outline-none"
           />
         </label>
 
